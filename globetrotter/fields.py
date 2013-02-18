@@ -1,4 +1,4 @@
-from django.conf.settings import TIME_ZONE
+from django.conf import settings
 import pytz
 
 ALL_TIME_ZONE_CHOICES = [(tz, tz) for tz in pytz.all_timezones]
@@ -21,7 +21,7 @@ class TimeZoneField(models.CharField):
         default: settings.TIME_ZONE
         """
         kwargs['choices'] = kwargs.get('choices', COMMON_TIME_ZONE_CHOICES)
-        kwargs['default'] = kwargs.get('default', TIME_ZONE)
+        kwargs['default'] = kwargs.get('default', settings.TIME_ZONE)
         return super(TimeZoneField, self).__init__(*args, **kwargs)
 
     def to_python(self, value):
@@ -35,3 +35,20 @@ class TimeZoneField(models.CharField):
         Extract string name for pytz.timezone object.
         """
         return value.zone
+
+
+class LanguageField(models.CharField):
+    """
+    Stores language codes in two char ("en") or 5 char ("en_US", "en-us") format.
+    """
+
+    max_length = 5
+
+    def __init__(self, *args, **kwargs):
+        """
+        choices: settings.LANGUAGE
+        default: settings.LANGUAGE_CODE
+        """
+        kwargs['choices'] = kwargs.get('choices', settings.LANGUAGES)
+        kwargs['default'] = kwargs.get('default', settings.LANGUAGE_CODE)
+        return super(LanguageField, self).__init__(*args, **kwargs)
