@@ -12,7 +12,7 @@ setup(
     license="BSD",
     packages=["globetrotter"],
     zip_safe=False,
-    install_requires=[],
+    install_requires=['pytz'],
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python",
