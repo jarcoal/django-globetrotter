@@ -12,10 +12,10 @@ class TimeZoneMixin(models.Model):
         abstract = True
 
 class LanguageMixin(models.Model):
-	"""
-	Add language support to a model.
-	"""
-	language = fields.LanguageField()
+    """
+    Add language support to a model.
+    """
+    language = fields.LanguageField()
 
-	class Meta:
-		abstract = True
+    class Meta:
+        abstract = True
