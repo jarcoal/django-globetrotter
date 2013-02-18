@@ -9,7 +9,7 @@ class TimeZoneMixin(object):
 	NOTE: This should be left of the view class.
 	"""
 
-	time_zone_name = 'UTC'
+	time_zone_name = settings.TIME_ZONE
 
 	def render_to_response(self, *args, **kwargs):
 		timezone.activate(self.get_time_zone())
