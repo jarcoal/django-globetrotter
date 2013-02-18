@@ -51,5 +51,7 @@ class SubdomainLanguageMiddleware(object):
 
         if subdomain and subdomain in [language_code for language_code in settings.LANGUAGES]:
             translation.activate(subdomain)
+            request.LANGUAGE_CODE = translation.get_language()
+
         elif SUBDOMAIN_LANGUAGE_RAISE_404 and subdomain not in SUBDOMAIN_LANGUAGE_DEFAULTS:
             raise Http404
