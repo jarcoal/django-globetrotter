@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 import pytz
 
 ALL_TIME_ZONE_CHOICES = [(tz, tz) for tz in pytz.all_timezones]
@@ -7,16 +8,14 @@ COMMON_TIME_ZONE_CHOICES = [(tz, tz) for tz in pytz.common_timezones]
 
 class TimeZoneField(models.CharField):
     """
-    Stores pytz tzinfo object in the a CharField
+    Stores pytz.timezone objects in the database.
     """
 
     max_length = 64
-    description = 'Stores pytz tzinfo object in the a CharField'
+    description = _('Stores pytz.timezone objects in the database.')
 
     def __init__(self, *args, **kwargs):
         """
-        Set some values for the CharField
-
         choices: COMMON_TIME_ZONE_CHOICES
         default: settings.TIME_ZONE
         """
@@ -43,6 +42,7 @@ class LanguageField(models.CharField):
     """
 
     max_length = 5
+    description = _('Stores language codes in two char ("en") or 5 char ("en_US", "en-us") format.')
 
     def __init__(self, *args, **kwargs):
         """
