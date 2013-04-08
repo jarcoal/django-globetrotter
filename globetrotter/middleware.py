@@ -2,6 +2,7 @@ from django.conf import settings
 from django.utils import translation, timezone
 from django.utils.translation import ugettext as _
 from django.http import Http404
+from django.middleware.locale import LocaleMiddleware
 
 get_user_language = getattr(settings, 'GLOBETROTTER_GET_USER_LANGUAGE', lambda user: user.language)
 get_user_time_zone = getattr(settings, 'GLOBETROTTER_GET_USER_TIME_ZONE', lambda user: user.time_zone)
@@ -55,3 +56,18 @@ class SubdomainLanguageMiddleware(object):
 
         elif SUBDOMAIN_LANGUAGE_RAISE_404 and subdomain not in SUBDOMAIN_LANGUAGE_DEFAULTS:
             raise Http404
+
+class NoDefaultPrefixLocaleMiddleware(LocaleMiddleware):
+    """
+    Doesn't apply a language prefix to the URL if it's the default language.
+    Use instead of Django's default LocaleMiddleware.
+
+    Source: https://gist.github.com/cauethenorio/4948177
+    """
+
+    def process_request(self, request):
+        if self.is_language_prefix_patterns_used():
+            lang_code = (translation.get_language_from_path(request.path_info) or settings.LANGUAGE_CODE)
+
+        translation.activate(lang_code)
+        request.LANGUAGE_CODE = translation.get_language()
