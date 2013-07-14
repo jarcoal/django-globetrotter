@@ -37,7 +37,10 @@ class TimeZoneField(models.CharField):
         """
         Extract string name for pytz.timezone object.
         """
-        return value.zone
+        if hasattr(value, 'zone'):
+            return value.zone
+
+        return value
 
 
 class LanguageField(models.CharField):
