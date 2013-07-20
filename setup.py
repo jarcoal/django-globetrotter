@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="django-globetrotter",
-    version="0.0.4",
+    version="0.0.5",
     description="Extra i18n + l10n tools for Django",
     long_description="Extra i18n + l10n tools for Django",
     keywords="django, i18n, l10n",
